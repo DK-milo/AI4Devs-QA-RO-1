@@ -2,9 +2,18 @@
   "dependencies": {
     "dotenv": "^16.4.5"
   },
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:position": "cypress run --spec 'cypress/e2e/position.cy.js'",
+    "cypress:run:integration": "cypress run --spec 'cypress/e2e/position-integration.cy.js'",
+    "cypress:run:all-position": "cypress run --spec 'cypress/e2e/position*.cy.js'",
+    "test:e2e": "cypress run"
+  },
   "prisma": {
     "schema": "backend/prisma/schema.prisma"
   },
   "devDependencies": {
+    "cypress": "^14.5.4"
   }
 }

@@ -1,0 +1,30 @@
+[
+  {
+    "candidateId": 1,
+    "applicationId": 101,
+    "fullName": "Juan Pérez",
+    "currentInterviewStep": "Initial Screening",
+    "averageScore": 4
+  },
+  {
+    "candidateId": 2,
+    "applicationId": 102,
+    "fullName": "María García",
+    "currentInterviewStep": "Initial Screening",
+    "averageScore": 5
+  },
+  {
+    "candidateId": 3,
+    "applicationId": 103,
+    "fullName": "Carlos López",
+    "currentInterviewStep": "Technical Interview",
+    "averageScore": 3
+  },
+  {
+    "candidateId": 4,
+    "applicationId": 104,
+    "fullName": "Ana Martínez",
+    "currentInterviewStep": "Final Interview",
+    "averageScore": 4
+  }
+]

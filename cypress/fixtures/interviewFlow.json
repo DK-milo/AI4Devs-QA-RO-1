@@ -1,0 +1,39 @@
+{
+  "interviewFlow": {
+    "positionName": "Senior Frontend Developer",
+    "interviewFlow": {
+      "id": 1,
+      "description": "Frontend Developer Interview Process",
+      "interviewSteps": [
+        {
+          "id": 1,
+          "name": "Initial Screening",
+          "orderIndex": 1,
+          "interviewFlowId": 1,
+          "interviewTypeId": 1
+        },
+        {
+          "id": 2,
+          "name": "Technical Interview",
+          "orderIndex": 2,
+          "interviewFlowId": 1,
+          "interviewTypeId": 2
+        },
+        {
+          "id": 3,
+          "name": "Final Interview",
+          "orderIndex": 3,
+          "interviewFlowId": 1,
+          "interviewTypeId": 3
+        },
+        {
+          "id": 4,
+          "name": "Offer",
+          "orderIndex": 4,
+          "interviewFlowId": 1,
+          "interviewTypeId": 4
+        }
+      ]
+    }
+  }
+}
