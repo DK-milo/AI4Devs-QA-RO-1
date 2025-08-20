@@ -29,16 +29,14 @@ describe('Position Interface - Full Integration Test', () => {
       body: { message: 'Updated to Technical Interview' }
     }).as('moveToTechnical')
     
-    cy.get('.col-md-3').eq(0).within(() => {
-      cy.get('.card').contains('Juan Pérez').as('juanCard')
-    })
+    // Get Juan Pérez card - ensure we get a single element
+    cy.get('.col-md-3').eq(0).find('.card').contains('Juan Pérez').first().as('juanCard')
     
-    cy.get('.col-md-3').eq(1).find('.card-body').as('technicalColumn')
+    // Get technical interview column
+    cy.get('.col-md-3').eq(1).find('.card-body').first().as('technicalColumn')
     
-    // Simulate drag and drop
-    cy.get('@juanCard').trigger('dragstart', { dataTransfer: new DataTransfer() })
-    cy.get('@technicalColumn').trigger('dragover')
-    cy.get('@technicalColumn').trigger('drop')
+    // Simulate drag and drop using the custom command for react-beautiful-dnd
+    cy.dragAndDropRBD('@juanCard', '@technicalColumn')
     
     cy.wait('@moveToTechnical').then((interception) => {
       expect(interception.request.body).to.deep.include({
@@ -53,15 +51,14 @@ describe('Position Interface - Full Integration Test', () => {
       body: { message: 'Updated to Final Interview' }
     }).as('moveToFinal')
     
-    cy.get('.col-md-3').eq(1).within(() => {
-      cy.get('.card').contains('Carlos López').as('carlosCard')
-    })
+    // Get Carlos López card - ensure we get a single element
+    cy.get('.col-md-3').eq(1).find('.card').contains('Carlos López').first().as('carlosCard')
     
-    cy.get('.col-md-3').eq(2).find('.card-body').as('finalColumn')
+    // Get final interview column
+    cy.get('.col-md-3').eq(2).find('.card-body').first().as('finalColumn')
     
-    cy.get('@carlosCard').trigger('dragstart', { dataTransfer: new DataTransfer() })
-    cy.get('@finalColumn').trigger('dragover')
-    cy.get('@finalColumn').trigger('drop')
+    // Simulate drag and drop using the custom command for react-beautiful-dnd
+    cy.dragAndDropRBD('@carlosCard', '@finalColumn')
     
     cy.wait('@moveToFinal')
     
@@ -71,15 +68,14 @@ describe('Position Interface - Full Integration Test', () => {
       body: { message: 'Updated to Offer' }
     }).as('moveToOffer')
     
-    cy.get('.col-md-3').eq(2).within(() => {
-      cy.get('.card').contains('Ana Martínez').as('anaCard')
-    })
+    // Get Ana Martínez card - ensure we get a single element
+    cy.get('.col-md-3').eq(2).find('.card').contains('Ana Martínez').first().as('anaCard')
     
-    cy.get('.col-md-3').eq(3).find('.card-body').as('offerColumn')
+    // Get offer column
+    cy.get('.col-md-3').eq(3).find('.card-body').first().as('offerColumn')
     
-    cy.get('@anaCard').trigger('dragstart', { dataTransfer: new DataTransfer() })
-    cy.get('@offerColumn').trigger('dragover')
-    cy.get('@offerColumn').trigger('drop')
+    // Simulate drag and drop using the custom command for react-beautiful-dnd
+    cy.dragAndDropRBD('@anaCard', '@offerColumn')
     
     cy.wait('@moveToOffer')
     
@@ -115,19 +111,15 @@ describe('Position Interface - Full Integration Test', () => {
     cy.intercept('PUT', '/candidates/2', { statusCode: 200, body: { message: 'Success' } }).as('update2')
     
     // Move multiple candidates quickly
-    cy.get('.col-md-3').eq(0).find('.card').contains('Juan Pérez').as('juan')
-    cy.get('.col-md-3').eq(0).find('.card').contains('María García').as('maria')
-    cy.get('.col-md-3').eq(1).find('.card-body').as('techColumn')
+    cy.get('.col-md-3').eq(0).find('.card').contains('Juan Pérez').first().as('juan')
+    cy.get('.col-md-3').eq(0).find('.card').contains('María García').first().as('maria')
+    cy.get('.col-md-3').eq(1).find('.card-body').first().as('techColumn')
     
     // First movement
-    cy.get('@juan').trigger('dragstart', { dataTransfer: new DataTransfer() })
-    cy.get('@techColumn').trigger('dragover')
-    cy.get('@techColumn').trigger('drop')
+    cy.dragAndDropRBD('@juan', '@techColumn')
     
     // Second movement immediately after
-    cy.get('@maria').trigger('dragstart', { dataTransfer: new DataTransfer() })
-    cy.get('@techColumn').trigger('dragover')
-    cy.get('@techColumn').trigger('drop')
+    cy.dragAndDropRBD('@maria', '@techColumn')
     
     // Verify both API calls were made
     cy.wait('@update1')
@@ -148,12 +140,11 @@ describe('Position Interface - Full Integration Test', () => {
     }).as('delayedUpdate')
     
     // Perform drag and drop
-    cy.get('.col-md-3').eq(0).find('.card').contains('Juan Pérez').as('juan')
-    cy.get('.col-md-3').eq(1).find('.card-body').as('techColumn')
+    cy.get('.col-md-3').eq(0).find('.card').contains('Juan Pérez').first().as('juan')
+    cy.get('.col-md-3').eq(1).find('.card-body').first().as('techColumn')
     
-    cy.get('@juan').trigger('dragstart', { dataTransfer: new DataTransfer() })
-    cy.get('@techColumn').trigger('dragover')
-    cy.get('@techColumn').trigger('drop')
+    // Simulate drag and drop using the custom command for react-beautiful-dnd
+    cy.dragAndDropRBD('@juan', '@techColumn')
     
     // Verify UI updates immediately (optimistic update)
     cy.get('.col-md-3').eq(1).should('contain.text', 'Juan Pérez')

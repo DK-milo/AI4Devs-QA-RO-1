@@ -84,15 +84,22 @@ const PositionsDetails = () => {
             return;
         }
 
-        const sourceStage = stages[source.droppableId];
-        const destStage = stages[destination.droppableId];
+        // Find stages by their actual ID instead of array index
+        const sourceStage = stages.find(stage => stage.id.toString() === source.droppableId);
+        const destStage = stages.find(stage => stage.id.toString() === destination.droppableId);
+
+        if (!sourceStage || !destStage) {
+            console.error('Stage not found:', { source: source.droppableId, destination: destination.droppableId });
+            return;
+        }
 
         const [movedCandidate] = sourceStage.candidates.splice(source.index, 1);
         destStage.candidates.splice(destination.index, 0, movedCandidate);
 
         setStages([...stages]);
 
-        const destStageId = stages[destination.droppableId].id;
+        // Use the destination stage ID directly
+        const destStageId = destStage.id;
 
         updateCandidateStep(movedCandidate.id, movedCandidate.applicationId, destStageId);
     };

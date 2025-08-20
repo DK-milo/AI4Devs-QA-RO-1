@@ -5,7 +5,7 @@ import CandidateCard from './CandidateCard';
 
 const StageColumn = ({ stage, index, onCardClick }) => (
     <Col md={3}>
-        <Droppable droppableId={`${index}`}>
+        <Droppable droppableId={`${stage.id}`}>
             {(provided) => (
                 <Card className="mb-4" ref={provided.innerRef} {...provided.droppableProps}>
                     <Card.Header className="text-center">{stage.title}</Card.Header>

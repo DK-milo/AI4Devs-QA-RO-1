@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getCandidatesByPositionService, getInterviewFlowByPositionService, getAllPositionsService } from '../../application/services/positionService';
+import { getCandidatesByPositionService, getInterviewFlowByPositionService, getAllPositionsService, getPositionByIdService } from '../../application/services/positionService';
 
 
 export const getAllPositions = async (req: Request, res: Response) => {
@@ -35,6 +35,20 @@ export const getInterviewFlowByPosition = async (req: Request, res: Response) =>
             res.status(404).json({ message: 'Position not found', error: error.message });
         } else {
             res.status(500).json({ message: 'Server error', error: String(error) });
+        }
+    }
+};
+
+export const getPositionById = async (req: Request, res: Response) => {
+    try {
+        const positionId = parseInt(req.params.id);
+        const position = await getPositionByIdService(positionId);
+        res.status(200).json(position);
+    } catch (error) {
+        if (error instanceof Error && error.message === 'Position not found') {
+            res.status(404).json({ message: 'Position not found' });
+        } else {
+            res.status(500).json({ message: 'Error retrieving position', error: error instanceof Error ? error.message : String(error) });
         }
     }
 };

@@ -76,3 +76,27 @@ export const getAllPositionsService = async () => {
         throw new Error('Error retrieving all positions');
     }
 };
+
+export const getPositionByIdService = async (positionId: number) => {
+    try {
+        const position = await prisma.position.findUnique({
+            where: { id: positionId },
+            include: {
+                interviewFlow: {
+                    include: {
+                        interviewSteps: true
+                    }
+                }
+            }
+        });
+
+        if (!position) {
+            throw new Error('Position not found');
+        }
+
+        return position;
+    } catch (error) {
+        console.error('Error retrieving position by ID:', error);
+        throw error;
+    }
+};
